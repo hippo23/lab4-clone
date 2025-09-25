@@ -2,6 +2,7 @@ import 'other_common_types.dart';
 
 abstract class MatchingMechanism {
   int _turnCtr = 0;
+  int _grouping = 1;
   MatchingStage _stage = MatchingStage.matching;
 
   void resetMatching() {
@@ -12,9 +13,14 @@ abstract class MatchingMechanism {
   bool nextStage(int? lastPick, int pick);
 
   MatchingStage get stage => _stage;
+  int get grouping => _grouping;
 }
 
 class RegularMatchingMechanism extends MatchingMechanism {
+  RegularMatchingMechanism() {
+    _grouping = 2;
+  }
+
   @override
   bool nextStage(int? lastPick, int pick) {
     _turnCtr += 1;
@@ -32,6 +38,10 @@ class RegularMatchingMechanism extends MatchingMechanism {
 }
 
 class ExtraOneMatchingMechanism extends MatchingMechanism {
+  ExtraOneMatchingMechanism() {
+    _grouping = 3;
+  }
+
   @override
   bool nextStage(int? lastPick, int pick) {
     _turnCtr += 1;
@@ -56,6 +66,10 @@ class ExtraOneMatchingMechanism extends MatchingMechanism {
 }
 
 class ExtraTwoMatchingMechanism extends MatchingMechanism {
+  ExtraTwoMatchingMechanism() {
+    _grouping = 3;
+  }
+
   @override
   bool nextStage(int? lastPick, int pick) {
     _turnCtr += 1;
@@ -76,6 +90,34 @@ class ExtraTwoMatchingMechanism extends MatchingMechanism {
         return true;
       }
     } else {
+      return true;
+    }
+  }
+}
+
+class Pick4 extends MatchingMechanism {
+  Pick4() {
+    _grouping = 4;
+  }
+
+  @override
+  bool nextStage(int? lastPick, int pick) {
+    _turnCtr += 1;
+    if (_turnCtr < 4) {
+      if (_turnCtr == 1 || lastPick == pick) {
+        _stage = MatchingStage.matching;
+      } else if (lastPick != pick) {
+        _stage = MatchingStage.failed;
+      }
+      return false;
+    } else {
+      if (_stage == MatchingStage.matching) {
+        if (lastPick == pick) {
+          _stage = MatchingStage.success;
+        } else {
+          _stage = MatchingStage.failed;
+        }
+      }
       return true;
     }
   }

@@ -15,7 +15,6 @@ ModifiedMemoryGameModel? make(
     TurnOrder turnOrder;
 
     // the groupings
-    int k;
 
     if (turnOrderTag == TurnOrderTag.roundRobin) {
       turnOrder = RoundRobin();
@@ -24,20 +23,16 @@ ModifiedMemoryGameModel? make(
     }
 
     if (matchingModeTag == MatchingModeTag.regular) {
-      k = 2;
       matchingMechanism = RegularMatchingMechanism();
     } else if (matchingModeTag == MatchingModeTag.extra1) {
-      k = 3;
       matchingMechanism = ExtraOneMatchingMechanism();
     } else {
-      k = 3;
       matchingMechanism = ExtraTwoMatchingMechanism();
     }
 
     ModifiedMemoryGameModel model = ModifiedMemoryGameModel(
       r,
       c,
-      k,
       s,
       turnOrder,
       matchingMechanism,

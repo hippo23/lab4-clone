@@ -22,7 +22,6 @@ class ModifiedMemoryGameModel {
   ModifiedMemoryGameModel(
     int r,
     int c,
-    int k,
     int s,
     TurnOrder turnOrder,
     MatchingMechanism matchingMechanism,
@@ -30,11 +29,11 @@ class ModifiedMemoryGameModel {
     // put the mechanisms in place
     _turnOrder = turnOrder;
     _matchingMechanism = matchingMechanism;
-    _groupSize = k;
+    _groupSize = _matchingMechanism.grouping;
 
     // if the number of cells cannot be dvided into groups of k
     // we throw an error
-    if ((r * c) % k != 0) throw "Invalid grid";
+    if ((r * c) % _groupSize != 0) throw "Invalid grid";
 
     // otherwise, we go ahead and create the grid
     // each cell has two numbers, one representing its group, one representing
@@ -45,7 +44,7 @@ class ModifiedMemoryGameModel {
     List<List<int>> flatCells = [];
     for (int i = 0; i < r; i++) {
       for (int j = 0; j < c; j++) {
-        if (groupCtr % k == 0) {
+        if (groupCtr % _groupSize == 0) {
           groupCtr = 0;
           group += 1;
         }

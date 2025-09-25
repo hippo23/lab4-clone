@@ -8,7 +8,6 @@ void main(List<String> args) {
   int r = int.parse(args[0]);
   int c = int.parse(args[1]);
   int s = int.parse(args[2]);
-  int k;
 
   String matchingModeString = args[3];
   String turnOrderString = args[4];
@@ -25,13 +24,10 @@ void main(List<String> args) {
   }
 
   if (matchingModeString == "regular") {
-    k = 2;
     matchingMechanism = RegularMatchingMechanism();
   } else if (matchingModeString == "extra1") {
-    k = 3;
     matchingMechanism = ExtraOneMatchingMechanism();
   } else if (matchingModeString == "extra2") {
-    k = 3;
     matchingMechanism = ExtraTwoMatchingMechanism();
   } else {
     return;
@@ -41,7 +37,6 @@ void main(List<String> args) {
     ModifiedMemoryGameModel model = ModifiedMemoryGameModel(
       r,
       c,
-      k,
       s,
       turnOrder,
       matchingMechanism,
@@ -53,6 +48,7 @@ void main(List<String> args) {
       view,
     );
     view.attachObserver(controller);
+    controller.start();
   } catch (e) {
     return;
   }

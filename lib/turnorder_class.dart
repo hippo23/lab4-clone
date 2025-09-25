@@ -8,12 +8,9 @@ import 'other_common_types.dart';
 
 abstract class TurnOrder {
   Player nextPlayer(MatchingStage result, Player currentPlayer);
-}
 
-class RoundRobin implements TurnOrder {
-  @override
-  Player nextPlayer(MatchingStage result, Player currentPlayer) {
-    if (currentPlayer == Player.p1) {
+  Player changePlayer(Player player) {
+    if (player == Player.p1) {
       return Player.p2;
     } else {
       return Player.p1;
@@ -21,19 +18,31 @@ class RoundRobin implements TurnOrder {
   }
 }
 
-class UntilIncorrect implements TurnOrder {
+class RoundRobin extends TurnOrder {
+  @override
+  Player nextPlayer(MatchingStage result, Player currentPlayer) {
+    return changePlayer(currentPlayer);
+  }
+}
+
+class UntilIncorrect extends TurnOrder {
   @override
   Player nextPlayer(MatchingStage result, Player currentPlayer) {
     if (result == MatchingStage.success || result == MatchingStage.matching) {
-      // return the regular player if matching is still in matching stage, its up to the
-      // model to address this properly
       return currentPlayer;
     } else {
-      if (currentPlayer == Player.p1) {
-        return Player.p2;
-      } else {
-        return Player.p1;
-      }
+      return changePlayer(currentPlayer);
+    }
+  }
+}
+
+class UntilCorrect extends TurnOrder {
+  @override
+  Player nextPlayer(MatchingStage result, Player currentPlayer) {
+    if (result == MatchingStage.failed || result == MatchingStage.matching) {
+      return currentPlayer;
+    } else {
+      return changePlayer(currentPlayer);
     }
   }
 }

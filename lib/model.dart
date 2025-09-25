@@ -35,6 +35,8 @@ class ModifiedMemoryGameModel {
     // we throw an error
     if ((r * c) % _groupSize != 0) throw "Invalid grid";
 
+    if (r < 2 || c > 9) throw "Invalid grid";
+
     // otherwise, we go ahead and create the grid
     // each cell has two numbers, one representing its group, one representing
     // whether it is flipped.

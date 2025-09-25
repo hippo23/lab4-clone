@@ -213,6 +213,20 @@ void testMatching() {
 }
 
 void testGameplay() {
+  test('testFaultyModel', () {
+    RoundRobin turnOrder = RoundRobin();
+    RegularMatchingMechanism matching = RegularMatchingMechanism();
+    expect(
+      () => ModifiedMemoryGameModel(0, 5, 150, turnOrder, matching),
+      throwsA(equals("Invalid grid")),
+    );
+
+    expect(
+      () => ModifiedMemoryGameModel(3, 5, 150, turnOrder, matching),
+      throwsA(equals("Invalid grid")),
+    );
+  });
+
   test('testGameplayDraw', () {
     RoundRobin turnOrder = RoundRobin();
     RegularMatchingMechanism matching = RegularMatchingMechanism();

@@ -219,7 +219,6 @@ void testGameplay() {
     ModifiedMemoryGameModel model = ModifiedMemoryGameModel(
       3,
       4,
-      2,
       150,
       turnOrder,
       matching,
@@ -322,7 +321,6 @@ void testGameplay() {
     ModifiedMemoryGameModel model = ModifiedMemoryGameModel(
       3,
       4,
-      2,
       150,
       turnOrder,
       matching,
@@ -436,7 +434,6 @@ void testGameplay() {
     ModifiedMemoryGameModel model = ModifiedMemoryGameModel(
       3,
       4,
-      2,
       150,
       turnOrder,
       matching,

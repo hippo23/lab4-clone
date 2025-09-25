@@ -94,31 +94,3 @@ class ExtraTwoMatchingMechanism extends MatchingMechanism {
     }
   }
 }
-
-class Pick4 extends MatchingMechanism {
-  Pick4() {
-    _grouping = 4;
-  }
-
-  @override
-  bool nextStage(int? lastPick, int pick) {
-    _turnCtr += 1;
-    if (_turnCtr < 4) {
-      if (_turnCtr == 1 || lastPick == pick) {
-        _stage = MatchingStage.matching;
-      } else if (lastPick != pick) {
-        _stage = MatchingStage.failed;
-      }
-      return false;
-    } else {
-      if (_stage == MatchingStage.matching) {
-        if (lastPick == pick) {
-          _stage = MatchingStage.success;
-        } else {
-          _stage = MatchingStage.failed;
-        }
-      }
-      return true;
-    }
-  }
-}

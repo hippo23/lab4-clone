@@ -95,6 +95,11 @@ class ModifiedMemoryGameModel {
     _turnGuesses.add([row, col]);
 
     if (_matchingMechanism.nextStage(_lastPick, _gameState[row][col][1])) {
+      if (!_isTurnOver) {
+        if (_matchingMechanism.stage == MatchingStage.success) {
+          _score[_playerIndex] += 1;
+        }
+      }
       _isTurnOver = true;
     }
 
@@ -111,9 +116,7 @@ class ModifiedMemoryGameModel {
 
     _isTurnOver = false;
 
-    if (_matchingMechanism.stage == MatchingStage.success) {
-      _score[_playerIndex] += 1;
-    } else if (_matchingMechanism.stage == MatchingStage.failed) {
+    if (_matchingMechanism.stage == MatchingStage.failed) {
       // reset all the cards flipped
       for (List<int> guess in _turnGuesses) {
         _gameState[guess[0]][guess[1]][0] = 0;

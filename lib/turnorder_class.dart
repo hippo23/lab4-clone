@@ -35,14 +35,3 @@ class UntilIncorrect extends TurnOrder {
     }
   }
 }
-
-class UntilCorrect extends TurnOrder {
-  @override
-  Player nextPlayer(MatchingStage result, Player currentPlayer) {
-    if (result == MatchingStage.failed || result == MatchingStage.matching) {
-      return currentPlayer;
-    } else {
-      return changePlayer(currentPlayer);
-    }
-  }
-}
